@@ -119,8 +119,8 @@ function sendcommand(){
 	if(sentcom>=7) for(var i=1;i<=7;i++) document.getElementById("cmd"+i).innerHTML="",sentcom=1;
 	document.getElementById("cmd"+sentcom).innerHTML="Turn #"+turns+" > "+curcmd;
 	document.getElementById("input").value="";
-	if(curcmd=="0") return;
 	revaction();
+	if(curcmd=="0") return;
 	var i=0;
 	var op="",obj="";
 	for(;i<curcmd.length;i++){
