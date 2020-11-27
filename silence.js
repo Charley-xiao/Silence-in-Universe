@@ -34,6 +34,9 @@ var curobj="";
 var relation=[];
 var warstate=0;
 var warlist=[];
+var sayuz=[];
+var prop=[];
+var outout=[];
 function setCookie(cname,cvalue,exdays){
 	var d=new Date();
 	d.setTime(d.getTime()+(exdays*24*60*60*1000));
@@ -82,12 +85,182 @@ function output(str){
 	}
 }
 function checkforwars(){
-
+	for(var i=0;i<foundseq.length;i++){
+		var obj_=foundseq[i];
+		var delt=getrand(20)-10;
+		for(var j=0;j<mp.length;j++){
+			if(mp[j]==obj_){
+				if(relation[j]<=-100) break;
+				relation[j]+=delt;
+				if(relation[j]>=100) /*window.alert("外交官终止了我们与"+obj_+"的关系提升"),*/relation[j]=100;
+				if(relation[j]<=-100){
+					window.alert("战争！"+name+" VS "+obj_);
+					relation[j]=-100;
+					warstate=1;
+					warlist.push(obj_);
+					document.getElementById("civ"+i+"c").style.color="red";
+					document.getElementById("civ"+i+"c").innerHTML="交战中！";
+					break;
+				}
+				if(relation[j]>0) document.getElementById("civ"+i+"c").style.color="green";
+				else if(relation[j]==0) document.getElementById("civ"+i+"c").style.color="white";
+				else if(relation[j]<0) document.getElementById("civ"+i+"c").style.color="red";
+				document.getElementById("civ"+i+"c").innerHTML=relation[j];
+				break;
+			}
+		}
+	}
+}
+function CLEARNAME(targ){
+	var pos=0;
+	for(var i=0;i<foundseq.length;i++){
+		if(foundseq[i]==targ){
+			foundedcivs--;
+			document.getElementById("civ"+i).innerHTML="";
+			document.getElementById("civ"+i+"b").innerHTML="";
+			document.getElementById("civ"+i+"c").innerHTML="";
+			document.getElementById("civ"+i+"d").innerHTML="";
+			document.getElementById("info").removeChild(document.getElementById("civ"+i));
+			document.getElementById("info").removeChild(document.getElementById("civ"+i+"b"));
+			document.getElementById("info").removeChild(document.getElementById("civ"+i+"c"));
+			document.getElementById("info").removeChild(document.getElementById("civ"+i+"d"));
+			pos=i;
+			break;
+		}
+	}
+	//pos*6+7+"%";
+	pos++;
+	for(;pos<=20;pos++){
+		document.getElementById("civ"+pos).style.top=(pos-1)*6+7+"%";
+		document.getElementById("civ"+pos+"b").style.top=(pos-1)*6+7+"%";
+		document.getElementById("civ"+pos+"c").style.top=(pos-1)*6+7+"%";
+		document.getElementById("civ"+pos+"d").style.top=(pos-1)*6+7+"%";
+	}
+}
+function findpower(targ){
+	for(var i=0;i<mp.length;i++){
+		if(targ==mp[i]){
+			return prop[i];
+		}
+	}
+	window.alert("Error!Code:1000");
+}
+function DirectToFail(){
+	window.alert("开发中");
+}
+function checkifend(){
+	if(outout.length==19) return 1;
+	return 0;
+}
+function DirectToSuc(){
+	window.alert("开发中");
+}
+function Update_LANDS(targstr,delta){
+	for(var i=0;i<foundseq.length;i++){
+		if(foundseq[i]==targstr){
+			var ttmp=parseInt(document.getElementById("civ"+i+"b").innerHTML);
+			ttmp+=delta;
+			document.getElementById("civ"+i+"b").innerHTML=ttmp;
+			break;
+		}
+	}
 }
 function Update(){
 	document.getElementById("showturn").innerHTML=turns;
 	document.getElementById("showland").innerHTML=lands;
 	checkforwars();
+	if(warstate){
+		var mypow=lands,otpow=0;
+		var tog="";
+		for(var i=0;i<sayuz.length;i++){
+			tog+=sayuz[i];
+			mypow+=findpower(sayuz[i]);
+			if(i!=sayuz.length-1) tog+=",";
+		}
+		var enem="";
+		for(var i=0;i<warlist.length;i++){
+			enem+=warlist[i];
+			otpow+=findpower(warlist[i]);
+			if(i!=warlist.length-1) enem+=",";
+		}
+		window.alert("您和"+tog+"是盟友，正在与"+enem+"交战，自动进入交战环节，交战环节不计入总回合数，且禁用部分操作");
+		while(warstate&&mypow>0&&otpow>0){
+			var opt=window.prompt("请输入操作：\n格式：at（进攻）/ne（谈判）+空格+文明名称");
+			var act="",esp="";
+			var ppos=0;
+			for(;ppos<opt.length;ppos++){
+				if(opt[ppos]==' ') break;
+				act+=opt[ppos]; 
+			}
+			ppos++;
+			for(;ppos<opt.length;ppos++) esp+=opt[ppos];
+			if(act=="at"){
+				var dam=getrand(mypow*mypow/otpow);
+				otpow-=dam;
+				mypow+=dam;
+				lands+=dam;
+				document.getElementById("showland").innerHTML=lands;
+				Update_LANDS(warlist[0],-dam);
+				window.alert("您造成伤害"+dam+"点");
+			}
+			else if(act=="ne"){
+				if(mypow/otpow>=2||getrand(3)%3==0){
+					window.alert("对方接受了停战");
+					warstate=0;
+					for(var i=0;i<warlist.length;i++){
+						var findtarg=warlist[i];
+						for(var j=0;j<mp.length;j++){
+							if(findtarg==mp[j]){
+								relation[j]=0;
+								for(var k=0;k<foundseq.length;k++){
+									if(foundseq[k]==findtarg){
+										document.getElementById("civ"+k+"c").style.color="white";
+										document.getElementById("civ"+k+"c").innerHTML="0";
+										break;
+									}
+								}
+								break;
+							}
+						}
+					}
+					while(warlist.length) warlist.pop();
+					break;
+				}
+				else{
+					window.alert("对方拒绝停战");
+				}
+			}
+			else{
+				window.alert("无效操作！");
+				continue;
+			}
+			var hisdamage=getrand(mypow*2/3);
+			otpow+=hisdamage;
+			mypow-=hisdamage;
+			lands-=hisdamage;
+			document.getElementById("showland").innerHTML=lands;
+			window.alert("对方造成伤害"+hisdamage+"点");
+			Update_LANDS(warlist[0],hisdamage);
+			if(mypow<=0){
+				warstate=0;
+				break;
+			}
+		}
+		if(otpow<=0){
+			warstate=0;
+			window.alert("胜利！");
+			for(var i=0;i<warlist.length;i++){
+				outout.push(warlist[i]);
+				CLEARNAME(warlist[i]);
+			}
+			while(warlist.length) warlist.pop();
+		}
+		else if(mypow<=0){
+			window.alert("失败！");
+			DirectToFail();
+		}
+	}
+	if(checkifend()) DirectToSuc();
 }
 function GameDate(){
 	var yy=1000+turns;
@@ -106,7 +279,7 @@ function watchciv(){
 	}
 }
 function calctop(){
-	return foundedcivs*10+12+"%";
+	return foundedcivs*6+7+"%";
 }
 function sendcommand(){
 	if(document.getElementById("cmd").style.top!="250px"){
@@ -140,9 +313,10 @@ function sendcommand(){
 						if(tmpk==NaN){
 							window.alert("正处于战争中！");
 							relation[i]=-100;
+							break;
 						}
 						tmpk+=2;
-						if(tmpk>=100) window.alert("外交官终止了我们与"+obj+"的关系提升"),tmpk=100;
+						if(tmpk>=100) /*window.alert("外交官终止了我们与"+obj+"的关系提升"),*/tmpk=100;
 						if(tmpk<0) document.getElementById("civ"+j+"c").style.color="red";
 						else if(tmpk==0) document.getElementById("civ"+j+"c").style.color="white";
 						else if(tmpk>0) document.getElementById("civ"+j+"c").style.color="green";
@@ -167,7 +341,7 @@ function sendcommand(){
 						if(tmpk<0) document.getElementById("civ"+j+"c").style.color="red";
 						else if(tmpk==0) document.getElementById("civ"+j+"c").style.color="white";
 						else if(tmpk>0) document.getElementById("civ"+j+"c").style.color="green";
-						if(tmpk==-100)document.getElementById("civ"+j+"c").innerHTML="战争中！";
+						if(tmpk==-100)document.getElementById("civ"+j+"c").innerHTML="交战中！";
 						else document.getElementById("civ"+j+"c").innerHTML=tmpk;
 						break;
 					} 
@@ -177,10 +351,18 @@ function sendcommand(){
 		}
 	}
 	else if(op=="Req"){
-
+		var typ=window.prompt("请输入请求类型：\n1.交易请求\n2.结盟请求\n3.退出联盟");
 	}
 	else if(op=="War"){
-
+		window.alert("向"+obj+"宣战！");
+		for(i=0;i<mp.length;i++){
+			if(mp[i]==obj){
+				relation[i]=-100;
+				warstate=1;
+				warlist.push(obj);
+				break;
+			}
+		}
 	}
 	else{
 		window.alert("无效指令！");
@@ -228,8 +410,13 @@ function NewPlanetDetected(curTIME){
 	else kankeist="<p id=\"civ"+foundedcivs+"c\" style=\"position: absolute;top: "+curtop+";left: 60%;width: 20%;color: red;\">"+kankei+"</p>";
 	document.getElementById("info").innerHTML+=
 	"<p id=\"civ"+foundedcivs+"\" style=\"position: absolute;top: "+curtop+";left: 12%;width: 20%;\">"+newname+"</p>";
+	var hisprop=getrand(2*lands);
+	for(var qq=0;qq<mp.length;qq++) if(mp[qq]==newname){
+		prop[qq]=hisprop;
+		break;
+	}
 	document.getElementById("info").innerHTML+=
-	"<p id=\"civ"+foundedcivs+"b\" style=\"position: absolute;top: "+curtop+";left: 36%;width: 20%;\">"+getrand(3*lands)+"</p>";
+	"<p id=\"civ"+foundedcivs+"b\" style=\"position: absolute;top: "+curtop+";left: 36%;width: 20%;\">"+hisprop+"</p>";
 	document.getElementById("info").innerHTML+=kankeist;
 	document.getElementById("info").innerHTML+=
 	"<p onclick=\"actions()\" id=\"civ"+foundedcivs+"d\" style=\"position: absolute;top: "+curtop+";left: 84%;width: 20%;color: blue;\">点击</p>";
@@ -237,7 +424,7 @@ function NewPlanetDetected(curTIME){
 function explore(){
 	var gamedate=GameDate();
 	command+=1;turns+=1;
-	if(getrand(3)%3||foundedcivs>=9){
+	if(getrand(3)%3||foundedcivs>=17){
 		document.getElementById("dcon").innerHTML+="<div id=\"command"+command+"\" class=\"iee\"></div>";
 		output(gamedate+"end"+name+"发现了一块无生命的新星球并占领了它......");
 		lands++;
