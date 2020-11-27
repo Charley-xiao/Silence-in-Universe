@@ -10,7 +10,7 @@ function sleepDEBUG(){
 function getrand(upsize){
 	return parseInt(Math.random()*upsize+1);
 }
-var namesofplanets=["Cinnamon","ISON0012","Zeus","Hρα","Poseidon","Neptune","Pluto","Hestia","Ares","Athena",
+var namesofplanets=["Cinnamon","ISON0012","Zeus","Hra","Poseidon","Neptune","Pluto","Hestia","Ares","Athena",
 "Hermes","Hephaistos","Aphrodite","Artemis","Apollo","Dionysus","Demeter","WY013C","CJ-2020F"];
 function shuffleSelf(array,size){
     var index=-1,length=array.length,lastIndex=length-1;
@@ -120,10 +120,10 @@ function CLEARNAME(targ){
 			document.getElementById("civ"+i+"b").innerHTML="";
 			document.getElementById("civ"+i+"c").innerHTML="";
 			document.getElementById("civ"+i+"d").innerHTML="";
-			document.getElementById("info").removeChild(document.getElementById("civ"+i));
-			document.getElementById("info").removeChild(document.getElementById("civ"+i+"b"));
-			document.getElementById("info").removeChild(document.getElementById("civ"+i+"c"));
-			document.getElementById("info").removeChild(document.getElementById("civ"+i+"d"));
+			// document.getElementById("info").removeChild(document.getElementById("civ"+i));
+			// document.getElementById("info").removeChild(document.getElementById("civ"+i+"b"));
+			// document.getElementById("info").removeChild(document.getElementById("civ"+i+"c"));
+			// document.getElementById("info").removeChild(document.getElementById("civ"+i+"d"));
 			pos=i;
 			break;
 		}
@@ -131,10 +131,21 @@ function CLEARNAME(targ){
 	//pos*6+7+"%";
 	pos++;
 	for(;pos<=20;pos++){
-		document.getElementById("civ"+pos).style.top=(pos-1)*6+7+"%";
-		document.getElementById("civ"+pos+"b").style.top=(pos-1)*6+7+"%";
-		document.getElementById("civ"+pos+"c").style.top=(pos-1)*6+7+"%";
-		document.getElementById("civ"+pos+"d").style.top=(pos-1)*6+7+"%";
+		// document.getElementById("civ"+pos).style.top=(pos-1)*6+7+"%";
+		// document.getElementById("civ"+pos+"b").style.top=(pos-1)*6+7+"%";
+		// document.getElementById("civ"+pos+"c").style.top=(pos-1)*6+7+"%";
+		// document.getElementById("civ"+pos+"d").style.top=(pos-1)*6+7+"%";
+		if(document.getElementById("civ"+pos)==null){
+			document.getElementById("civ"+(pos-1)).innerHTML="";
+			document.getElementById("civ"+(pos-1)+"b").innerHTML="";
+			document.getElementById("civ"+(pos-1)+"c").innerHTML="";
+			document.getElementById("civ"+(pos-1)+"d").innerHTML="";
+			break;
+		}
+		document.getElementById("civ"+(pos-1)).innerHTML=document.getElementById("civ"+pos).innerHTML;
+		document.getElementById("civ"+(pos-1)+"b").innerHTML=document.getElementById("civ"+pos+"b").innerHTML;
+		document.getElementById("civ"+(pos-1)+"c").innerHTML=document.getElementById("civ"+pos+"c").innerHTML;
+		document.getElementById("civ"+(pos-1)+"d").innerHTML=document.getElementById("civ"+pos+"d").innerHTML;
 	}
 }
 function findpower(targ){
@@ -223,7 +234,7 @@ function Update(){
 							}
 						}
 					}
-					while(warlist.length) warlist.pop();
+					warlist.splice(0,warlist.length);
 					break;
 				}
 				else{
@@ -253,7 +264,7 @@ function Update(){
 				outout.push(warlist[i]);
 				CLEARNAME(warlist[i]);
 			}
-			while(warlist.length) warlist.pop();
+			warlist.splice(0,warlist.length);
 		}
 		else if(mypow<=0){
 			window.alert("失败！");
@@ -306,7 +317,7 @@ function sendcommand(){
 		window.alert("与"+obj+"改善关系");
 		for(i=0;i<mp.length;i++){
 			if(mp[i]==obj){
-				relation[i]+=2;
+				relation[i]+=10;
 				for(var j=0;j<foundseq.length;j++){
 					if(foundseq[j]==obj){
 						var tmpk=parseInt(document.getElementById("civ"+j+"c").innerHTML);
@@ -315,7 +326,7 @@ function sendcommand(){
 							relation[i]=-100;
 							break;
 						}
-						tmpk+=2;
+						tmpk+=10;
 						if(tmpk>=100) /*window.alert("外交官终止了我们与"+obj+"的关系提升"),*/tmpk=100;
 						if(tmpk<0) document.getElementById("civ"+j+"c").style.color="red";
 						else if(tmpk==0) document.getElementById("civ"+j+"c").style.color="white";
@@ -332,11 +343,11 @@ function sendcommand(){
 		window.alert("终止与"+obj+"的外交关系");
 		for(i=0;i<mp.length;i++){
 			if(mp[i]==obj){
-				relation[i]-=2;
+				relation[i]-=10;
 				for(var j=0;j<foundseq.length;j++){
 					if(foundseq[j]==obj){
 						var tmpk=parseInt(document.getElementById("civ"+j+"c").innerHTML);
-						tmpk-=2;
+						tmpk-=10;
 						if(tmpk<=-100) window.alert("战争！\n"+name+" VS "+obj),tmpk=-100,warstate=1,warlist.push(obj);
 						if(tmpk<0) document.getElementById("civ"+j+"c").style.color="red";
 						else if(tmpk==0) document.getElementById("civ"+j+"c").style.color="white";
