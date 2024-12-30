@@ -1,227 +1,548 @@
-@keyframes fade-in{
-    0%{opacity: 0;}
-    40%{opacity: 0;}
-    100%{opacity: 1;}
+/* Importing a futuristic font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+/* CSS Variables for easy theme management */
+:root {
+  --bg-color: #0f0f0f; /* Dark background */
+  --primary-neon: #00e6e6; /* Electric Blue */
+  --secondary-neon: #ff00ff; /* Hot Pink */
+  --accent-neon: #ffae00; /* Bright Orange */
+  --text-color: #ffffff; /* White text */
+  --button-bg: #1a1a1a; /* Dark button background */
+  --button-border: #00e6e6; /* Neon border */
+  --button-hover-bg: #00e6e6; /* Hover background */
+  --button-hover-text: #0f0f0f; /* Hover text color */
+  --transition-speed: 0.3s;
+  --font-family: 'Orbitron', sans-serif;
+  --command-bg: rgba(30, 30, 30, 0.95);
+  --command-border: var(--accent-neon);
+  --command-text: var(--text-color);
+  --notification-success: #00e676; /* Green */
+  --notification-error: #ff1744; /* Red */
+  --notification-info: #2979ff; /* Blue */
+  --notification-warning: #ff9100; /* Orange */
 }
-@-webkit-keyframes fade-in{
-    0%{opacity: 0;}
-    40%{opacity: 0;}
-    100%{opacity: 1;}
+
+
+/* Global Styles */
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: var(--bg-color);
+  font-family: var(--font-family);
+  color: var(--text-color);
+  overflow: hidden;
 }
-body{
-	/*background-image: url(silence.jpg);*/
-	width: 100%;
-	height: 100%;
-	background-repeat: no-repeat;
-	background-size: cover;
+
+/* Keyframes for fade-in effect */
+@keyframes fade-in {
+    0% { opacity: 0; }
+    40% { opacity: 0; }
+    100% { opacity: 1; }
 }
-#main{
-	position: absolute;
-	background-color: #F7EED6;
-	left: 1%;
-	top: 0%;
-	width: 69%;
-	height: 100%;
-	border-color: black;
-	border-radius: 2px;
-	transition-duration: 0.7s;
-    animation: fade-in;
-    animation-duration: 1s;
-    -webkit-animation: fade-in 1s;
-    opacity: 0.6;
+
+@-webkit-keyframes fade-in {
+    0% { opacity: 0; }
+    40% { opacity: 0; }
+    100% { opacity: 1; }
 }
-#side{
-	position: absolute;
-	left: 71%;
-	top: 0%;
-	width: 28%;
-	height: 100%;
+
+/* Keyframes for pulsating glow */
+@keyframes pulsate {
+    0% { box-shadow: 0 0 5px var(--primary-neon); }
+    50% { box-shadow: 0 0 20px var(--primary-neon); }
+    100% { box-shadow: 0 0 5px var(--primary-neon); }
 }
-#sideheader{
-	background-color: white; 
-    border: 2px solid black;
-    color: black;
+
+@-webkit-keyframes pulsate {
+    0% { box-shadow: 0 0 5px var(--primary-neon); }
+    50% { box-shadow: 0 0 20px var(--primary-neon); }
+    100% { box-shadow: 0 0 5px var(--primary-neon); }
+}
+
+/* Main Container */
+#main {
+    position: absolute;
+    background-color: rgba(15, 15, 15, 0.9); /* Semi-transparent dark background */
+    left: 1%;
+    top: 0%;
+    width: 39%;
+    height: 100%;
+    border: 2px solid var(--primary-neon);
+    border-radius: 8px;
+    transition: all var(--transition-speed) ease;
+    animation: fade-in 1s forwards;
+    -webkit-animation: fade-in 1s forwards;
+    box-shadow: 0 0 20px var(--primary-neon);
+}
+
+/* Side Panel */
+#side {
+    position: absolute;
+    left: 41%;
+    top: 0%;
+    width: 58%;
+    height: 100%;
+    background-color: rgba(15, 15, 15, 0.95);
+    border: 2px solid var(--secondary-neon);
+    border-radius: 8px;
+    box-shadow: 0 0 20px var(--secondary-neon);
+    overflow-y: auto;
+}
+
+/* Headers */
+#sideheader, #bar1head, #bar2head, #bar3head, #bar4head {
+    background-color: rgba(0, 230, 230, 0.8);
+    border: 2px solid var(--accent-neon);
+    color: var(--bg-color);
     padding: 16px 32px;
     text-align: center;
-    text-decoration: none;
-    display: inline-block;
     font-size: 18px;
-    margin: 4px 2px;
-    -webkit-transition-duration: 0.4s; 
-    transition-duration: 0.4s;
-    cursor: pointer;
-    position: absolute;
-    top: 8%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    animation: fade-in;
-    animation-duration: 1s;
-    -webkit-animation: fade-in 1s;
+    font-weight: bold;
+    border-radius: 4px;
+    text-shadow: 0 0 10px var(--accent-neon);
+    animation: fade-in 1s forwards;
+    -webkit-animation: fade-in 1s forwards;
+    margin-bottom: 10px;
 }
-button{
-    background-color: white; 
-    border: 2px solid black;
-    color: black;
+
+/* Buttons */
+button {
+    background-color: var(--button-bg);
+    border: 2px solid var(--primary-neon);
+    color: var(--text-color);
     padding: 13px 26px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin: 4px 2px;
-    -webkit-transition-duration: 0.4s; 
-    transition-duration: 0.4s;
+    margin: 10px;
+    transition: all var(--transition-speed) ease;
     cursor: pointer;
+    border-radius: 4px;
+    animation: fade-in 1s forwards;
+    -webkit-animation: fade-in 1s forwards;
+    box-shadow: 0 0 10px var(--primary-neon);
+    font-family: var(--font-family);
+}
+
+button:hover {
+    background-color: var(--primary-neon);
+    color: var(--bg-color);
+    box-shadow: 0 0 20px var(--primary-neon), 0 0 30px var(--secondary-neon);
+    transform: scale(1.05);
+}
+
+/* Specific Buttons Positioning */
+#explore, #develop, #watchciv, #next {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    animation: fade-in;
-    animation-duration: 1s;
-    -webkit-animation: fade-in 1s;
+    padding: 10px 20px;
 }
-button:hover{
-    background-color: black;
-    color: white;
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+
+#explore {
+    top: 20%;
+    left: 10%;
 }
-#explore{
-	position: absolute;
+
+#develop {
     top: 20%;
     left: 30%;
 }
-#develop{
-	position: absolute;
-	top: 20%;
-	left: 70%;
-}
-#watchciv{
-	position: absolute;
-	top: 32%;
-	left: 30%;
-}
-#next{
-	position: absolute;
-	top: 32%;
-	left: 70%;
-}
-#info{
-	position: absolute;
-	top: 35%;
-	width: 100%;
-	height: 55%;
-}
-#bar1head{
-	position: absolute;
-	top: 8%;
-	left: 12%;
-	width: 20%;
-}
-#bar2head{
-	position: absolute;
-	top: 8%;
-	left: 36%;
-	width: 20%;
-}
-#bar3head{
-	position: absolute;
-	top: 8%;
-	left: 60%;
-	width: 20%;
-}
-#bar4head{
-	position: absolute;
-	top: 8%;
-	left: 84%;
-	width: 20%;
-}
-#cmd{
-	position: absolute;
-	top: 5px;
-	left: 5px;
-	width: 19%;
-	height: 30%;
-	background-color: gray;
-	border: 2px solid black;
-}
-#cmd:hover{
-    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-}
-#sup{
-	position: absolute;
-	left: 92%;
-	top: 0%;
-}
-#intro{
-	position: absolute;
-}
-#ctp{
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%,-50%);
-}
-#intro{ 
-  height:100%; 
-  width:100%; 
-  margin:0; 
-  padding:0; 
-  overflow:hidden; 
-}
-#intro{ 
-  background: linear-gradient(180deg, #373773, #235689, #2a9096, #364a7b, #4a367b, #5e3665, #2c294b, #31437a);
-  background-size: 1600% 1600%;
-  -webkit-animation: skygradient 180s ease infinite;
-  -moz-animation: skygradient 180s ease infinite;
-  -o-animation: skygradient 180s ease infinite;
-  animation: skygradient 180s ease infinite;
-}
-@-webkit-keyframes skygradient {
-  0%{background-position:50% 0%}
-  50%{background-position:50% 100%}
-  100%{background-position:50% 0%}
-}
-@-moz-keyframes skygradient {
-  0%{background-position:50% 0%}
-  50%{background-position:50% 100%}
-  100%{background-position:50% 0%}
-}
-@-o-keyframes skygradient {
-  0%{background-position:50% 0%}
-  50%{background-position:50% 100%}
-  100%{background-position:50% 0%}
-}
-@keyframes skygradient { 
-  0%{background-position:50% 0%}
-  50%{background-position:50% 100%}
-  100%{background-position:50% 0%}
-}
-canvas { 
-  width: 100%!important; height: 100%!important; 
+
+#watchciv {
+    top: 20%;
+    left: 50%;
 }
 
+#next {
+    top: 20%;
+    left: 70%;
+}
+
+/* Info Panel */
+#info {
+    position: absolute;
+    top: 35%;
+    width: 95%;
+    height: 55%;
+    background-color: rgba(0, 0, 0, 0.7);
+    border: 2px solid var(--secondary-neon);
+    border-radius: 8px;
+    overflow-y: auto;
+    padding: 20px;
+    box-shadow: 0 0 20px var(--secondary-neon);
+}
+
+/* Notification Container */
+.notification-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 300px;
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Notification Styles */
+.notification {
+  padding: 15px 20px;
+  border-radius: 5px;
+  color: var(--text-color);
+  font-size: 16px;
+  box-shadow: 0 0 10px var(--primary-neon);
+  opacity: 1;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.notification.fade-out {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+
+.notification.success {
+  background-color: var(--notification-success);
+  box-shadow: 0 0 15px var(--notification-success);
+}
+
+.notification.error {
+  background-color: var(--notification-error);
+  box-shadow: 0 0 15px var(--notification-error);
+}
+
+.notification.info {
+  background-color: var(--notification-info);
+  box-shadow: 0 0 15px var(--notification-info);
+}
+
+.notification.warning {
+  background-color: var(--notification-warning);
+  box-shadow: 0 0 15px var(--notification-warning);
+}
+
+
+/* Command Panel Styling */
+.command-panel {
+  position: absolute;
+  top: 5%;
+  left: 5%;
+  width: 90%;
+  max-width: 600px;
+  height: 50%;
+  background-color: var(--command-bg);
+  border: 2px solid var(--command-border);
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 0 20px var(--accent-neon);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all var(--transition-speed) ease;
+  animation: fade-in 1s forwards;
+  -webkit-animation: fade-in 1s forwards;
+}
+
+.command-panel:hover {
+  box-shadow: 0 0 30px var(--accent-neon), 0 0 40px var(--primary-neon);
+}
+
+/* Command Tips */
+.command-tips {
+  color: var(--text-color);
+  font-size: 16px;
+  margin-bottom: 10px;
+  text-align: center;
+  text-shadow: 0 0 5px var(--secondary-neon);
+}
+
+/* Command Log */
+.command-log {
+  flex: 1;
+  background-color: rgba(0, 0, 0, 0.8);
+  border: 1px solid var(--secondary-neon);
+  border-radius: 4px;
+  padding: 10px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  color: var(--text-color);
+  font-size: 14px;
+  font-family: 'Courier New', Courier, monospace;
+  text-shadow: 0 0 3px var(--secondary-neon);
+}
+
+.command-entry {
+  margin: 5px 0;
+}
+
+/* Command Input */
+.command-input {
+  width: 100%;
+  height: 40px;
+  border: 2px solid var(--primary-neon);
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 16px;
+  resize: none;
+  background-color: rgba(255, 255, 255, 0.1);
+  color: var(--text-color);
+  font-family: 'Courier New', Courier, monospace;
+  outline: none;
+  transition: border-color var(--transition-speed) ease;
+}
+
+.command-input:focus {
+  border-color: var(--accent-neon);
+}
+
+/* Send Button */
+.send-button {
+  align-self: flex-end;
+  background-color: var(--button-bg);
+  border: 2px solid var(--primary-neon);
+  color: var(--text-color);
+  padding: 10px 20px;
+  font-size: 16px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all var(--transition-speed) ease;
+  box-shadow: 0 0 10px var(--primary-neon);
+  font-family: var(--font-family);
+}
+
+.send-button:hover {
+  background-color: var(--primary-neon);
+  color: var(--bg-color);
+  box-shadow: 0 0 20px var(--primary-neon), 0 0 30px var(--secondary-neon);
+  transform: scale(1.05);
+}
+
+/* Additional Styling for Info Panel Headers */
+.info-headers {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.bar-header {
+  flex: 1;
+  text-align: center;
+  font-size: 16px;
+  color: var(--text-color);
+  text-shadow: 0 0 5px var(--accent-neon);
+}
+
+/* Status Sections */
+.status {
+  color: var(--text-color);
+  font-size: 16px;
+  margin: 10px 0;
+}
+
+.status p {
+  display: inline;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+
+/* Command Panel */
+#cmd {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 19%;
+    height: 30%;
+    background-color: rgba(30, 30, 30, 0.95);
+    border: 2px solid var(--accent-neon);
+    border-radius: 8px;
+    transition: all var(--transition-speed) ease;
+    animation: fade-in 1s forwards;
+    -webkit-animation: fade-in 1s forwards;
+    box-shadow: 0 0 20px var(--accent-neon);
+}
+
+#cmd:hover {
+    box-shadow: 0 0 30px var(--accent-neon), 0 0 40px var(--primary-neon);
+}
+
+/* Action Buttons within Info Panel */
+#ctp, #intro {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Intro Panel */
+#intro { 
+    height: 100%; 
+    width: 100%; 
+    margin: 0; 
+    padding: 0; 
+    overflow: hidden; 
+    background: linear-gradient(180deg, #373773, #235689, #2a9096, #364a7b, #4a367b, #5e3665, #2c294b, #31437a);
+    background-size: 1600% 1600%;
+    animation: skygradient 180s ease infinite;
+    -webkit-animation: skygradient 180s ease infinite;
+    -moz-animation: skygradient 180s ease infinite;
+    -o-animation: skygradient 180s ease infinite;
+}
+
+@keyframes skygradient { 
+    0% { background-position: 50% 0%; }
+    50% { background-position: 50% 100%; }
+    100% { background-position: 50% 0%; }
+}
+
+@-webkit-keyframes skygradient {
+    0% { background-position: 50% 0%; }
+    50% { background-position: 50% 100%; }
+    100% { background-position: 50% 0%; }
+}
+
+@-moz-keyframes skygradient {
+    0% { background-position: 50% 0%; }
+    50% { background-position: 50% 100%; }
+    100% { background-position: 50% 0%; }
+}
+
+@-o-keyframes skygradient {
+    0% { background-position: 50% 0%; }
+    50% { background-position: 50% 100%; }
+    100% { background-position: 50% 0%; }
+}
+
+/* Canvas Styling */
+canvas { 
+    width: 100% !important; 
+    height: 100% !important; 
+}
+
+/* Footer Styling */
 footer {
-  position:fixed;
-  z-index:1000;
-  left:0;
-  bottom:0;
-  display:block;
-  padding:20px;
-  box-sizing:border-box;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
 }
 
 footer a {
-  text-decoration:none;
-  display:block;
-  width:50px;
+    text-decoration: none;
+    display: inline-block;
+    width: 50px;
+    transition: transform var(--transition-speed) ease;
+}
+
+footer a:hover {
+    transform: scale(1.2);
 }
 
 footer a svg {
-  width:100%;
-  max-width:50px;
-  min-width:40px;
-  display:inline-block;
+    width: 100%;
+    max-width: 50px;
+    min-width: 40px;
+    display: block;
+    fill: var(--primary-neon);
+    transition: fill var(--transition-speed) ease;
 }
-.iee{
-	-webkit-transition-duration: 1s; 
-    transition-duration: 1s;
+
+footer a:hover svg {
+    fill: var(--accent-neon);
+}
+
+/* Additional Classes */
+.iee {
+    transition-duration: 1s; 
+    transition-property: all;
+}
+
+/* New Styles for Diplomacy Panel Rows */
+.civ-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--secondary-neon);
+}
+
+.civ-name, .civ-power, .civ-relation, .civ-action-button {
+  flex: 1;
+  text-align: center;
+  font-size: 16px;
+  color: var(--text-color);
+  text-shadow: 0 0 3px var(--secondary-neon);
+}
+
+.civ-name {
+  flex: 2; /* Wider for the name */
+}
+
+.civ-power, .civ-relation {
+  flex: 1;
+}
+
+.civ-action-button {
+  flex: 1;
+  background-color: var(--button-bg);
+  border: 2px solid var(--primary-neon);
+  color: var(--text-color);
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all var(--transition-speed) ease;
+  font-family: var(--font-family);
+  box-shadow: 0 0 5px var(--primary-neon);
+}
+
+.civ-action-button:hover {
+  background-color: var(--primary-neon);
+  color: var(--bg-color);
+  box-shadow: 0 0 10px var(--primary-neon), 0 0 15px var(--secondary-neon);
+  transform: scale(1.05);
+}
+
+
+/* Responsive Adjustments */
+@media (max-width: 1200px) {
+    #main, #side {
+        width: 100%;
+        left: 0;
+    }
+    #side {
+        top: 60%;
+        height: 40%;
+    }
+    button {
+        width: 80%;
+        left: 10%;
+        transform: translate(0, 0);
+    }
+    #cmd {
+        width: 90%;
+        left: 5%;
+    }
+}
+
+@media (max-width: 768px) {
+    #explore, #develop, #watchciv, #next {
+        position: static;
+        margin: 10px auto;
+        display: block;
+    }
+    #info {
+        width: 95%;
+        height: auto;
+        top: 60%;
+    }
 }

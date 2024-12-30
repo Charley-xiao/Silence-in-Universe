@@ -286,36 +286,47 @@
 		</div>
 		<div id="side">
 			<div id="sideheader">操作栏</div>
-			<button id="explore" onclick="explore()">扩张领地</button>
-			<button id="develop">发展内部</button>
-			<button id="watchciv" onclick="watchciv()">查看外交</button>
-			<button id="next" onclick="clearall()">清除存档</button>
-			<div id="turn" style="color: white;">当前回合：<p id="showturn">0</p></div>
-			<div id="cntland" style="color: white;">当前领土：<p id="showland">1</p></div>
-			<div id="info" style="display: none;color: white;">
+			<button id="explore" class="action-button" onclick="explore()">扩张领地</button>
+			<button id="develop" class="action-button">发展内部</button>
+			<button id="watchciv" class="action-button" onclick="watchciv()">查看外交</button>
+			<button id="next" class="action-button" onclick="clearall()">清除存档</button>
+			<div class="status">
+				<span>当前回合：</span><p id="showturn">0</p>
+			</div>
+			<div class="status">
+				<span>当前领土：</span><p id="showland">1</p>
+			</div>
+			<div id="info" class="info-panel">
 				<center><p id="infoheader">外交</p></center><br/>
-				<p id="bar1head">文明名称</p>
-				<p id="bar2head">文明领土</p>
-				<p id="bar3head">关系</p>
-				<p id="bar4head">举措</p>
+				<div class="info-headers">
+					<p class="bar-header">文明名称</p>
+					<p class="bar-header">文明领土</p>
+					<p class="bar-header">关系</p>
+					<p class="bar-header">举措</p>
+				</div>
+				<!-- Diplomacy entries will be dynamically inserted here -->
 			</div>
 		</div>
-		<div id="cmd" style="display: none;">
-			<p id="tips" style="color: white;top: 0%;left: 0%;position: absolute;font-size: 5px;">输入Imp（改善关系）/Ins（外交侮辱）/Req（请求）/War（宣战）加空格加文明名称</p>
-			<div id="cmds">
-				<p id="cmd1" style="color: white;font-size: 5px;top: 20%;left: 0%;position: absolute;"></p>
-				<p id="cmd2" style="color: white;font-size: 5px;top: 32%;left: 0%;position: absolute;"></p>
-				<p id="cmd3" style="color: white;font-size: 5px;top: 44%;left: 0%;position: absolute;"></p>
-				<p id="cmd4" style="color: white;font-size: 5px;top: 56%;left: 0%;position: absolute;"></p>
-				<p id="cmd5" style="color: white;font-size: 5px;top: 68%;left: 0%;position: absolute;"></p>
-				<p id="cmd6" style="color: white;font-size: 5px;top: 80%;left: 0%;position: absolute;"></p>
-				<p id="cmd7" style="color: white;font-size: 5px;top: 92%;left: 0%;position: absolute;"></p>
+		<div id="cmd" class="command-panel" style="display: none;">
+			<p id="tips" class="command-tips">输入 Imp（改善关系）/ Ins（外交侮辱）/ Req（请求）/ War（宣战）加空格加文明名称</p>
+			<div id="cmds" class="command-log">
+				<p id="cmd1" class="command-entry"></p>
+				<p id="cmd2" class="command-entry"></p>
+				<p id="cmd3" class="command-entry"></p>
+				<p id="cmd4" class="command-entry"></p>
+				<p id="cmd5" class="command-entry"></p>
+				<p id="cmd6" class="command-entry"></p>
+				<p id="cmd7" class="command-entry"></p>
 			</div>
-			<textarea cols="20" rows="1" id="input" style="border-color: black;border-radius: 2px;background-color: rgba(241,241,241,.98);width: 100%;height: 20%;padding: 10px;resize: none;position: absolute;top: 90%;left: 0%;" placeholder="输入0取消"></textarea>
-			<p id="send" style="border-color: black;border-radius: 2px;background-color: rgba(241,241,241,.98);width: 20%;height: 7%;padding: 10px;resize: none;position: absolute;top: 88%;left: 70%;font-size: 5px;color: blue;" onclick="sendcommand()">发送</p>
+			<textarea id="input" class="command-input" placeholder="输入0取消"></textarea>
+			<button id="send" class="send-button" onclick="sendcommand()">发送</button>
 		</div>
-		<div id="sup" style="color: white;font-size: 5px;">Made By Charleyxiao.<br/>版本号：20201127C<br/><a href="https://charley-xiao.github.io" style="color: white;">前往主站</a></div>
+		<div id="sup" class="footer">
+			<p>Made By Charleyxiao.<br/>版本号：20201127C<br/><a href="https://charley-xiao.github.io">前往主站</a></p>
+		</div>
+		<div id="notifications" class="notification-container"></div>
 	</div>
+	
 
 </body>
 </html>
